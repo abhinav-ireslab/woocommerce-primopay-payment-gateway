@@ -14,6 +14,8 @@ WooCommerce PrimoPay payment gateway.
 
 Allows your WooCommerce shop to accept credit cards payments using the PrimoPay payment gateway.
 
+The PrimoPay website has more information regarding this product: http://www.primopay.com.au
+
 
 
 == Installation ==
