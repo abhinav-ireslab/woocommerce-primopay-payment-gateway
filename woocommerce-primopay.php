@@ -3,7 +3,7 @@
 Plugin Name: WooCommerce - PrimoPay Gateway for WooCommerce
 Plugin URI: http://primopay.com.au
 Description: PrimoPay gateway for WooCommerce.
-Version: 1.2
+Version: 1.3
 Author: PrimoPay
 Author URI: http://primopay.com.au
  
