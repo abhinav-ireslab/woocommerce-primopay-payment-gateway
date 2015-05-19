@@ -3,12 +3,12 @@ Contributors: primopay
 Donate link: 
 Tags: woocommerce, primopay, payment gateway, gateway, payments, credit card, Australia, ctel
 Requires at least: 3.8.0
-Tested up to: 4.1.0
+Tested up to: 4.2.2
 Stable tag: 4.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-WooCommerce PrimoPay payment gateway.
+WooCommerce PrimoPay
 
 == Description ==
 
@@ -59,6 +59,11 @@ The token facility will be coded in a future version. If you require tokens then
 
 
 == Changelog ==
+
+= 1.2 =
+* Tested up to 4.2.2
+* Adjusted error messages to remove deprecated API calls
+* Used WP built in URL finder for call to wsdl file
 
 = 1.1 =
 * Tested up to 4.1.0

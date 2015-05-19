@@ -180,49 +180,49 @@ function woocommerce_primopay_init() {
 								}
 								</script>";
 				
-				echo "<br><label for='cardname'>Cardname</label><input class='primpay cardname' type=input name='cardname' value='$cardname'>";
-				echo "<br><label for='cardnum'>Card Number</label><input class='primpay cardnum'  type=input name='cardnum' value='$cardnum' onkeyup='this.value=removeSpaces(this.value);' maxlength=16>";
+				echo "<br><label for='cardname'>Cardname</label><input class='primopay cardname' type=input name='cardname' value='$cardname'>";
+				echo "<br><label for='cardnum'>Card Number</label><input class='primopay cardnum'  type=input name='cardnum' value='$cardnum' onkeyup='this.value=removeSpaces(this.value);' maxlength=16>";
 				echo "<br>Expiry: $expmonth $expyear";
-				echo "<br><label for='cvv'>CVV</label><input class='primpay css'  type=input name='cvv' value='$cvv'>";
+				echo "<br><label for='cvv'>CVV</label><input class='primopay css'  type=input name='cvv' value='$cvv'>";
 			
 			
 		}
 		
 		function validate_fields(){
-			global $woocommerce;
-			
-			$valid = true;
-			
-			$cardname = sanitize_text_field($_POST['cardname']);
-			$cardnum = sanitize_text_field($_POST['cardnum']);
-			$expmonth = str_pad(sanitize_text_field($_POST['expmonth']),2,"0",STR_PAD_LEFT);
-			$expyear = sanitize_text_field($_POST['expyear']);
-			$cvv = sanitize_text_field($_POST['cvv']);			
-			
-			if(strlen($cardname)<2){
-				$error_message = "Card name must be entered";
-				$woocommerce->add_error(__('Credit Card Details Error: ', 'woothemes') . $error_message);
-				$valid = false;
-			}
-			
-			if(strlen($cardnum)!=16){
-				$error_message = "Card number must be 16 digits";
-				$woocommerce->add_error(__('Credit Card Details Error: ', 'woothemes') . $error_message);
-				$valid = false;
-			}
-			
-			$now = date("Ym");
-			if(($expyear.$expmonth)<$now){
-				$error_message = "Expiry date ".($expyear.$expmonth)." must be in the future";
-				$woocommerce->add_error(__('Credit Card Details Error: ', 'woothemes') . $error_message);
-				$valid = false;				
-			}
-						
-			if(strlen($cvv)!=3){
-				$error_message = "CVV must be 3 digits";
-				$woocommerce->add_error(__('Credit Card Details Error: ', 'woothemes') . $error_message);
-				$valid = false;
-			}
+            global $woocommerce;
+
+            $valid = true;
+
+            $cardname = sanitize_text_field($_POST['cardname']);
+            $cardnum = sanitize_text_field($_POST['cardnum']);
+            $expmonth = str_pad(sanitize_text_field($_POST['expmonth']),2,"0",STR_PAD_LEFT);
+            $expyear = sanitize_text_field($_POST['expyear']);
+            $cvv = sanitize_text_field($_POST['cvv']);
+
+            if(strlen($cardname)<2){
+                $error_message = "Card name must be entered";
+                wc_add_notice( sprintf( __('Credit Card Details Error: ', 'woothemes') . $error_message ),  'error' );
+                $valid = false;
+            }
+
+            if(strlen($cardnum)!=16){
+                $error_message = "Card number must be 16 digits";
+                wc_add_notice( sprintf( __('Credit Card Details Error: ', 'woothemes') . $error_message ),  'error' );
+                $valid = false;
+            }
+
+            $now = date("Ym");
+            if(($expyear.$expmonth)<$now){
+                $error_message = "Expiry date ".($expyear.$expmonth)." must be in the future";
+                wc_add_notice( sprintf( __('Credit Card Details Error: ', 'woothemes') . $error_message ),  'error' );
+                $valid = false;
+            }
+
+            if(strlen($cvv)!=3){
+                $error_message = "CVV must be 3 digits";
+                wc_add_notice( sprintf( __('Credit Card Details Error: ', 'woothemes') . $error_message ),  'error' );
+                $valid = false;
+            }
 			
 			
 			return $valid;
@@ -291,11 +291,11 @@ function woocommerce_primopay_init() {
             $params->CardExpiry = $expmonth.$expyear; 
             $params->CardCVV = $cvv;
             $params->CardHolderName = $cardname;
-            $params->Amount = $amount; 
-            
-            
-            
-            $wsdl_loc = site_url()."/wp-content/plugins/woocommerce-primopay/txn.wsdl";    
+            $params->Amount = $amount;
+
+
+
+            $wsdl_loc = plugins_url()."/woocommerce-primopay/txn.wsdl";
             
             // for testing only
             //$wsdl_loc = "http://localhost/woo/wp-content/plugins/woocommerce-primopay/txn.wsdl";  
@@ -333,11 +333,11 @@ function woocommerce_primopay_init() {
 			} else {
                 //$order->cancel_order();
                 
-                $error_message = "The bank said: ".$pprst['reponsecode']." ".$pprst['reponsedesc']." --".$params->CardExpiry;
+                $error_message = "The bank said: ".$pprst['reponsecode']." ".$pprst['reponsedesc'];
                 
-                $order->add_order_note( __($error_message, 'woothemes') );                  
+                $order->add_order_note( __($error_message, 'woothemes') );
 
-				$woocommerce->add_error(__('Payment error:', 'woothemes') . $error_message);
+                wc_add_notice( sprintf( __('Payment error: ' . $error_message , 'woothemes') ),  'error' );
 				return;				
 			}
 			
