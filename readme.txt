@@ -55,7 +55,7 @@ The token facility will be coded in a future version. If you require tokens then
 
 
 == Screenshots ==
-1. Configuration screen.
+* Configuration screen.
 
 
 == Changelog ==
